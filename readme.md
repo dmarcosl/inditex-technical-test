@@ -1,3 +1,19 @@
+# Solution
+
+I created a basic Spring Boot app with Java 11 (to have `HttpClient` instead of use an external library to make http requests). I could have use swagger codegen to generate a project from the file `similarProducts.yaml`, but having only 1 endpoint it was easier to create a project from scratch.
+
+The API info is in `com.example.shop.api` and the logic is in `com.example.shop.service`.
+
+I used the `Cacheable` annotation on the service method to cache the responses of "similar products", which is very common in an ecommerce platform. I would not have used the cache if I had to return the detail of the product of the given productId, because in that case the availability and price are important, but in a list of similar products it does not have as much relevance.
+
+The steps I followed to test the project are:
+
+- Added the folder `shared` to the file sharing settings of Docker.
+- Edited `docker-compose.yaml` to use influxdb `1.8` instead of `latest`, which currently is `2.0.8`, which is incompatible with k6.
+- Launch the mocks script.
+- Run the project's Tomcat.
+- Launch the test script.
+
 # Backend dev technical test
 We want to offer a new feature to our customers showing similar products to the one they are seeing. To do this we agreed with our front-end applications to create a new REST API that will provide them the product detail of similar products to a given one. [Here](./similarProducts.yaml) is the contract we agreed.
 
